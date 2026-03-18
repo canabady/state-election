@@ -1,0 +1,235 @@
+district_no,district_name,ac_no,ac_name,male,female,third_gender,total
+1,Thiruvallur,1,Gummidipoondi,122195,129372,36,251603
+1,Thiruvallur,2,Ponneri,121221,127662,34,248917
+1,Thiruvallur,3,Tiruttani,128642,131417,25,260084
+1,Thiruvallur,4,Thiruvallur,121188,127426,37,248651
+1,Thiruvallur,5,Poonamallee,176849,186769,70,363688
+1,Thiruvallur,6,Avadi,209662,219035,75,428772
+1,Thiruvallur,7,Maduravoyal,179602,184349,80,364031
+1,Thiruvallur,8,Ambattur,162248,168175,57,330480
+1,Thiruvallur,9,Madavaram,205922,214596,83,420601
+1,Thiruvallur,10,Thiruvottiyur,117181,123289,116,240586
+2,Chennai,11,Dr.Radhakrishnan Nagar,93576,102201,79,195856
+2,Chennai,12,Perambur,107995,114726,71,222792
+2,Chennai,13,Kolathur,99607,107607,37,207251
+2,Chennai,14,Villivakkam,76947,82785,32,159764
+2,Chennai,15,Thiru-Vi-Ka-Nagar,85724,93008,61,178793
+2,Chennai,16,Egmore,65677,69149,53,134879
+2,Chennai,17,Royapuram,75870,81004,57,156931
+2,Chennai,18,Harbour,58221,58620,55,116896
+2,Chennai,19,Chepauk-Thiruvallikeni,79412,84396,58,163866
+2,Chennai,20,Thousand Lights,73500,80343,65,153908
+2,Chennai,21,Anna Nagar,87325,94029,48,181402
+2,Chennai,22,Virugampakkam,95025,101461,50,196536
+2,Chennai,23,Saidapet,96950,103685,62,200697
+2,Chennai,24,Thiyagarayanagar,74682,80228,33,154943
+2,Chennai,25,Mylapore,93017,101691,23,194731
+2,Chennai,26,Velachery,102235,109411,45,211691
+3,Kancheepuram,28,Alandur,143839,152173,40,296052
+3,Kancheepuram,29,Sriperumbudur,181852,194007,62,375921
+3,Kancheepuram,36,Uthiramerur,118564,125300,58,243922
+3,Kancheepuram,37,Kancheepuram,133825,142437,37,276299
+4,Vellore,40,Katpadi,108863,116914,32,225809
+4,Vellore,43,Vellore,101554,109460,49,211063
+4,Vellore,44,Anaikattu,113833,120863,42,234738
+4,Vellore,45,Kilvaithinankuppam,104458,108985,8,213451
+4,Vellore,46,Gudiyattam,120946,127547,33,248526
+5,Krishnagiri,51,Uthangarai,116918,116541,41,233500
+5,Krishnagiri,52,Bargur,117135,120197,17,237349
+5,Krishnagiri,53,Krishnagiri,129777,135200,60,265037
+5,Krishnagiri,54,Veppanahalli,123389,120449,37,243875
+5,Krishnagiri,55,Hosur,169099,169124,72,338295
+5,Krishnagiri,56,Thalli,120000,115947,37,235984
+6,Dharmapuri,57,Palacodu,119611,117845,20,237476
+6,Dharmapuri,58,Pennagaram,126763,119521,9,246293
+6,Dharmapuri,59,Dharmapuri,129393,128464,82,257939
+6,Dharmapuri,60,Pappireddipatti,127427,127217,14,254658
+6,Dharmapuri,61,Harur,121453,122264,25,243742
+7,Tiruvannamalai,62,Chengam,132571,134045,13,266629
+7,Tiruvannamalai,63,Tiruvannamalai,119784,127477,48,247309
+7,Tiruvannamalai,64,Kilpennathur,117840,121058,15,238913
+7,Tiruvannamalai,65,Kalasapakkam,114155,116592,19,230766
+7,Tiruvannamalai,66,Polur,114221,118196,9,232426
+7,Tiruvannamalai,67,Arani,123335,129650,37,253022
+7,Tiruvannamalai,68,Cheyyar,117159,121115,9,238283
+7,Tiruvannamalai,69,Vandavasi,104662,107144,5,211811
+8,Viluppuram,70,Gingee,119278,121651,28,240957
+8,Viluppuram,71,Mailam,103451,104195,19,207665
+8,Viluppuram,72,Tindivanam,106762,110836,11,217609
+8,Viluppuram,73,Vanur,101938,106030,16,207984
+8,Viluppuram,74,Viluppuram,118786,125218,76,244080
+8,Viluppuram,75,Vikravandi,112050,115276,29,227355
+8,Viluppuram,76,Tirukkoyilur,121023,119948,32,241003
+9,Salem,81,Gangavalli,105720,111067,7,216794
+9,Salem,82,Attur,109943,116517,21,226481
+9,Salem,83,Yercaud,132685,137827,17,270529
+9,Salem,84,Omalur,148764,143081,21,291866
+9,Salem,85,Mettur,127853,125575,17,253445
+9,Salem,86,Edappadi,138709,135316,29,274054
+9,Salem,87,Sankari,130573,128075,30,258678
+9,Salem,88,Salem (West),127131,128125,64,255320
+9,Salem,89,Salem (North),114816,121224,48,236088
+9,Salem,90,Salem (South),109918,114130,49,224097
+9,Salem,91,Veerapandi,124850,123611,17,248478
+10,Namakkal,92,Rasipuram,107813,112728,13,220554
+10,Namakkal,93,Senthamangalam,111214,116087,26,227327
+10,Namakkal,94,Namakkal,113217,122093,41,235351
+10,Namakkal,95,Paramathi-Velur,97727,105830,10,203567
+10,Namakkal,96,Tiruchengodu,100412,106475,41,206928
+10,Namakkal,97,Kumarapalayam,104916,112239,69,217224
+11,Erode,98,Erode (East),84202,91989,37,176228
+11,Erode,99,Erode (West),118206,127246,41,245493
+11,Erode,100,Modakkurichi,98532,107577,13,206122
+11,Erode,103,Perundurai,101851,110225,8,212084
+11,Erode,104,Bhavani,108203,113170,20,221393
+11,Erode,105,Anthiyur,100339,105371,27,205737
+11,Erode,106,Gobichettipalayam,113378,124190,13,237581
+11,Erode,107,Bhavanisagar,113755,121806,23,235584
+12,The Nilgiris,108,Udhagamandalam,89066,98348,11,187425
+12,The Nilgiris,109,Gudalur,89206,94675,7,183888
+12,The Nilgiris,110,Coonoor,83045,92768,7,175820
+13,Coimbatore,111,Mettuppalayam,133022,146382,34,279438
+13,Coimbatore,116,Sulur,145987,157452,102,303541
+13,Coimbatore,117,Kavundampalayam,198430,208963,114,407507
+13,Coimbatore,118,Coimbatore (North),143383,148122,28,291533
+13,Coimbatore,119,Thondamuthur,138968,148371,103,287442
+13,Coimbatore,120,Coimbatore (South),90214,96263,32,186509
+13,Coimbatore,121,Singanallur,128758,137277,23,266058
+13,Coimbatore,122,Kinathukadavu,144562,155888,36,300486
+13,Coimbatore,123,Pollachi,96061,105919,35,202015
+13,Coimbatore,124,Valparai,81504,90759,21,172284
+14,Dindigul,127,Palani,115728,121582,49,237359
+14,Dindigul,128,Oddanchatram,104519,113177,2,217698
+14,Dindigul,129,Athoor,125056,134773,17,259846
+14,Dindigul,130,Nilakkottai,107389,111673,15,219077
+14,Dindigul,131,Natham,127116,131421,66,258603
+14,Dindigul,132,Dindigul,114893,122765,21,237679
+14,Dindigul,133,Vedasandur,118236,123573,4,241813
+15,Karur,134,Aravakurichi,92738,101763,4,194505
+15,Karur,135,Karur,106684,119859,41,226584
+15,Karur,136,Krishnarayapuram,98262,103794,31,202087
+15,Karur,137,Kulithalai,108343,113638,7,221988
+16,Tiruchirappalli,138,Manapparai,131212,134798,9,266019
+16,Tiruchirappalli,139,Srirangam,137694,146120,48,283862
+16,Tiruchirappalli,140,Tiruchirappalli (West),113050,122817,36,235903
+16,Tiruchirappalli,141,Tiruchirappalli (East),104883,112460,54,217397
+16,Tiruchirappalli,142,Thiruverumbur,124328,131860,51,256239
+16,Tiruchirappalli,143,Lalgudi,102156,108861,26,211043
+16,Tiruchirappalli,144,Manachanallur,113256,120924,37,234217
+16,Tiruchirappalli,145,Musiri,103631,108965,16,212612
+16,Tiruchirappalli,146,Thuraiyur,101144,107837,30,209011
+17,Perambalur,147,Perambalur,139914,148507,28,288449
+17,Perambalur,148,Kunnam,131720,134959,3,266682
+18,Cuddalore,151,Tittakudi,101774,104992,4,206770
+18,Cuddalore,152,Vriddhachalam,118319,119495,22,237836
+18,Cuddalore,153,Neyveli,94505,94503,16,189024
+18,Cuddalore,154,Panruti,116476,123504,68,240048
+18,Cuddalore,155,Cuddalore,105300,115773,79,221152
+18,Cuddalore,156,Kurinjipadi,116013,120238,46,236297
+18,Cuddalore,157,Bhuvanagiri,114785,116164,19,230968
+18,Cuddalore,158,Chidambaram,112664,116443,29,229136
+18,Cuddalore,159,Kattumannarkoil,111691,112864,10,224565
+19,Nagapattinam,163,Nagapattinam,84493,88464,22,172979
+19,Nagapattinam,164,Kilvelur,83392,85535,7,168934
+19,Nagapattinam,165,Vedaranyam,91735,94299,0,186034
+20,Thiruvarur,166,Thiruthuraipoondi,111001,114348,14,225363
+20,Thiruvarur,167,Mannargudi,112530,119401,4,231935
+20,Thiruvarur,168,Thiruvarur,126054,131818,20,257892
+20,Thiruvarur,169,Nannilam,131094,133352,16,264462
+21,Thanjavur,170,Thiruvidaimarudur,125132,129313,8,254453
+21,Thanjavur,171,Kumbakonam,122383,129469,16,251868
+21,Thanjavur,172,Papanasam,123838,130791,23,254652
+21,Thanjavur,173,Thiruvaiyaru,125357,131000,20,256377
+21,Thanjavur,174,Thanjavur,118648,130369,47,249064
+21,Thanjavur,175,Orathanadu,112298,118947,6,231251
+21,Thanjavur,176,Pattukkottai,115354,125580,20,240954
+21,Thanjavur,177,Peravurani,104268,108543,15,212826
+22,Pudukkottai,178,Gandarvakkottai,98028,96695,9,194732
+22,Pudukkottai,179,Viralimalai,110011,113040,33,223084
+22,Pudukkottai,180,Pudukkottai,109962,113943,23,223928
+22,Pudukkottai,181,Thirumayam,107006,112270,3,219279
+22,Pudukkottai,182,Alangudi,103987,106309,0,210296
+22,Pudukkottai,183,Aranthangi,112282,115305,1,227588
+23,Sivaganga,184,Karaikudi,148087,155256,28,303371
+23,Sivaganga,185,Tiruppattur,134270,139183,3,273456
+23,Sivaganga,186,Sivaganga,135113,141039,4,276156
+23,Sivaganga,187,Manamadurai,126565,131048,3,257616
+24,Madurai,188,Melur,113091,114687,11,227789
+24,Madurai,189,Madurai East,161361,169579,53,330993
+24,Madurai,190,Sholavandan,104246,108243,13,212502
+24,Madurai,191,Madurai North,106263,112410,46,218719
+24,Madurai,192,Madurai South,87179,90378,48,177605
+24,Madurai,193,Madurai Central,95632,101198,26,196856
+24,Madurai,194,Madurai West,133116,138214,11,271341
+24,Madurai,195,Thiruparankundram,150596,157157,30,307783
+24,Madurai,196,Thirumangalam,125756,133461,8,259225
+24,Madurai,197,Usilampatti,131411,132724,6,264141
+25,Theni,198,Andipatti,124591,129928,30,254549
+25,Theni,199,Periyakulam,128368,135070,109,263547
+25,Theni,200,Bodinayakanur,126856,134760,15,261631
+25,Theni,201,Cumbum,122496,131129,21,253646
+26,Virudhunagar,202,Rajapalayam,103236,108951,33,212220
+26,Virudhunagar,203,Srivilliputhur,108109,114218,40,222367
+26,Virudhunagar,204,Sattur,110693,117207,63,227963
+26,Virudhunagar,205,Sivakasi,109420,116013,28,225461
+26,Virudhunagar,206,Virudhunagar,96436,102141,39,198616
+26,Virudhunagar,207,Aruppukkottai,100000,106468,29,206497
+26,Virudhunagar,208,Tiruchuli,100645,103634,14,204293
+27,Ramanathapuram,209,Paramakudi,115701,117714,18,233433
+27,Ramanathapuram,210,Tiruvadanai,140103,141997,21,282121
+27,Ramanathapuram,211,Ramanathapuram,152412,157740,13,310165
+27,Ramanathapuram,212,Mudhukulathur,148105,149202,3,297310
+28,Thoothukudi,213,Vilathikulam,99913,103804,15,203732
+28,Thoothukudi,214,Thoothukkudi,120614,127623,63,248300
+28,Thoothukudi,215,Tiruchendur,112367,118305,30,230702
+28,Thoothukudi,216,Srivaikuntam,105099,107782,4,212885
+28,Thoothukudi,217,Ottapidaram,117432,123502,54,240988
+28,Thoothukudi,218,Kovilpatti,116317,123673,27,240017
+29,Tirunelveli,224,Tirunelveli,132511,140929,80,273520
+29,Tirunelveli,225,Ambasamudram,109384,116318,12,225714
+29,Tirunelveli,226,Palayamkottai,123972,131141,17,255130
+29,Tirunelveli,227,Nanguneri,125276,129130,14,254420
+29,Tirunelveli,228,Radhapuram,120458,124000,22,244480
+30,Kanniyakumari,229,Kanniyakumari,141230,145643,95,286968
+30,Kanniyakumari,230,Nagercoil,125873,131139,10,257022
+30,Kanniyakumari,231,Colachal,131885,131562,1,263448
+30,Kanniyakumari,232,Padmanabhapuram,116895,117142,19,234056
+30,Kanniyakumari,233,Vilavancode,111990,113226,3,225219
+30,Kanniyakumari,234,Killiyoor,123143,120678,16,243837
+31,Ariyalur,149,Ariyalur,129521,131624,16,261161
+31,Ariyalur,150,Jayankondam,129713,132068,12,261793
+32,Tiruppur,101,Dharapuram,106142,114593,8,220743
+32,Tiruppur,102,Kangayam,103784,112849,13,216646
+32,Tiruppur,112,Avanashi,119841,130496,9,250346
+32,Tiruppur,113,Tiruppur (North),152351,157662,125,310138
+32,Tiruppur,114,Tiruppur (South),94579,99011,24,193614
+32,Tiruppur,115,Palladam,156069,166429,32,322530
+32,Tiruppur,125,Udumalaipettai,109103,119396,25,228524
+32,Tiruppur,126,Madathukulam,102309,110417,16,212742
+33,Kallakurichi,77,Ulundurpettai,148929,148499,44,297472
+33,Kallakurichi,78,Rishivandiyam,135292,135198,51,270541
+33,Kallakurichi,79,Sankarapuram,130231,132859,46,263136
+33,Kallakurichi,80,Kallakurichi,137649,141044,69,278762
+34,Tenkasi,219,Sankarankovil,114876,121639,17,236532
+34,Tenkasi,220,Vasudevanallur,110960,116396,13,227369
+34,Tenkasi,221,Kadayanallur,132228,135272,17,267517
+34,Tenkasi,222,Tenkasi,136260,143223,102,279585
+34,Tenkasi,223,Alangulam,123739,129650,19,253408
+35,Chengalpattu,27,Shozhinganallur,262621,274254,116,536991
+35,Chengalpattu,30,Pallavaram,161197,168996,24,330217
+35,Chengalpattu,31,Tambaram,157580,166046,51,323677
+35,Chengalpattu,32,Chengalpattu,178076,188267,57,366400
+35,Chengalpattu,33,Thiruporur,140991,148359,51,289401
+35,Chengalpattu,34,Cheyyur,100103,101934,18,202055
+35,Chengalpattu,35,Madurantakam,103943,107288,64,211295
+36,Tirupathur,47,Vaniyambadi,118457,121713,50,240220
+36,Tirupathur,48,Ambur,103478,109113,40,212631
+36,Tirupathur,49,Jolarpet,115656,118154,20,233830
+36,Tirupathur,50,Tirupattur,111873,113016,29,224918
+37,Ranipet,38,Arakkonam,96982,102157,26,199165
+37,Ranipet,39,Sholinghur,126034,130072,12,256118
+37,Ranipet,41,Ranipet,119090,126719,44,245853
+37,Ranipet,42,Arcot,119107,124429,29,243565
+38,Mayiladuthurai,160,Sirkazhi,118809,120647,13,239469
+38,Mayiladuthurai,161,Mayiladuthurai,114613,117979,26,232618
+38,Mayiladuthurai,162,Poompuhar,127071,130050,8,257129
