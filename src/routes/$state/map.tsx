@@ -1,6 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, notFound } from '@tanstack/react-router'
+import { stateExists } from '../../services/appConfig'
 
-export const Route = createFileRoute('/map')({
+export const Route = createFileRoute('/$state/map')({
+  loader: async ({ params }) => {
+    if (!(await stateExists(params.state))) {
+      throw notFound()
+    }
+    return null
+  },
   component: MapPlaceholder,
 })
 

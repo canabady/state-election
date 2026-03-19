@@ -1,13 +1,15 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
-import { fetchElectorCsvRows, toInt } from '../../services/electors'
+import { fetchStateConfig, stateExists, type AppConfig } from '../../../services/appConfig'
+import { fetchElectorCsvRows, toInt } from '../../../services/electors'
 
 type DistrictAcRow = {
   district: string
   districtNo: number
   acNo: number
   acName: string
+  pollingStations: number | null
   male: number
   female: number
   thirdGender: number
@@ -16,10 +18,15 @@ type DistrictAcRow = {
 
 type SortColumn = 'acNo' | 'acName' | 'male' | 'female' | 'thirdGender' | 'totalVoters'
 type SortDirection = 'asc' | 'desc'
+type LoaderData = { config: AppConfig; rows: DistrictAcRow[] }
 
-export const Route = createFileRoute('/data/$district')({
+export const Route = createFileRoute('/$state/data/$district')({
   loader: async ({ params }) => {
-    const parsed = await fetchElectorCsvRows()
+    if (!(await stateExists(params.state))) {
+      throw notFound()
+    }
+    const config = await fetchStateConfig(params.state)
+    const parsed = await fetchElectorCsvRows(config.elector_csv_path)
 
     const districtParam = decodeURIComponent(params.district).trim().toLowerCase()
     const rows: DistrictAcRow[] = parsed
@@ -29,6 +36,7 @@ export const Route = createFileRoute('/data/$district')({
         districtNo: toInt(row.district_no),
         acNo: toInt(row.ac_no),
         acName: row.ac_name,
+        pollingStations: row.polling_stations?.trim() ? toInt(row.polling_stations) : null,
         male: toInt(row.male),
         female: toInt(row.female),
         thirdGender: toInt(row.third_gender),
@@ -36,17 +44,16 @@ export const Route = createFileRoute('/data/$district')({
       }))
       .sort((a, b) => a.acNo - b.acNo)
 
-    if (rows.length === 0) {
-      throw new Error(`No elector data found for district: ${params.district}`)
-    }
+    if (rows.length === 0) throw notFound()
 
-    return rows
+    return { config, rows } satisfies LoaderData
   },
   component: DistrictDetail,
 })
 
 function DistrictDetail() {
-  const rows = Route.useLoaderData()
+  const { config, rows } = Route.useLoaderData()
+  const state = config.state_id
   const [sortColumn, setSortColumn] = useState<SortColumn>('acNo')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const district = rows[0].district
@@ -54,6 +61,10 @@ function DistrictDetail() {
   const totalMale = rows.reduce((sum, row) => sum + row.male, 0)
   const totalFemale = rows.reduce((sum, row) => sum + row.female, 0)
   const totalThirdGender = rows.reduce((sum, row) => sum + row.thirdGender, 0)
+  const hasPollingStations = rows.some((row) => row.pollingStations !== null)
+  const totalPollingStations = hasPollingStations
+    ? rows.reduce((sum, row) => sum + (row.pollingStations ?? 0), 0).toLocaleString('en-IN')
+    : 'NA'
   const sortedRows = useMemo(() => {
     const copy = [...rows]
     copy.sort((a, b) => {
@@ -82,19 +93,27 @@ function DistrictDetail() {
     <section className="space-y-6 select-none caret-transparent">
       <div className="flex items-start gap-3">
         <Link
-          to="/data"
+          to="/$state/data"
+          params={{ state }}
           className="mt-1 rounded-xl border border-slate-300 bg-white p-2.5 text-slate-600 transition-all hover:bg-slate-50 hover:text-slate-900"
         >
           <ArrowLeft size={20} />
         </Link>
         <div className="space-y-1">
           <h2 className="text-2xl font-bold text-slate-900">{district}</h2>
-          <p className="text-sm text-slate-600">Assembly constituency-wise information in {district} district</p>
+          <p className="text-sm text-slate-600">
+            {config.ac_label}-wise information in {district} {config.district_label.toLowerCase()}
+          </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard label="No. of AC" value={rows.length.toLocaleString('en-IN')} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard
+          className="lg:col-span-2"
+          label={`No. of ${config.ac_short_label}`}
+          value={rows.length.toLocaleString('en-IN')}
+        />
+        <StatCard className="lg:col-span-2" label="No. of Polling Stations" value={totalPollingStations} />
         <StatCard label="Male" value={totalMale.toLocaleString('en-IN')} />
         <StatCard label="Female" value={totalFemale.toLocaleString('en-IN')} />
         <StatCard label="Third Gender" value={totalThirdGender.toLocaleString('en-IN')} />
@@ -107,14 +126,14 @@ function DistrictDetail() {
             <thead className="bg-slate-100 text-slate-700">
               <tr>
                 <SortableHeader
-                  label="AC No."
+                  label={`${config.ac_short_label} No.`}
                   align="left"
                   active={sortColumn === 'acNo'}
                   direction={sortDirection}
                   onClick={() => handleSort('acNo')}
                 />
                 <SortableHeader
-                  label="Assembly Constituency"
+                  label={config.ac_label}
                   align="left"
                   active={sortColumn === 'acName'}
                   direction={sortDirection}
@@ -169,9 +188,9 @@ function DistrictDetail() {
   )
 }
 
-function StatCard({ label, value }: { label: string; value: string }) {
+function StatCard({ label, value, className = '' }: { label: string; value: string; className?: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4">
+    <div className={`rounded-xl border border-slate-200 bg-white p-4 ${className}`}>
       <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
       <p className="mt-1 text-2xl font-bold text-slate-900">{value}</p>
     </div>

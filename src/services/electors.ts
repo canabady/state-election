@@ -5,20 +5,21 @@ export type ElectorCsvRow = {
   district_name: string
   ac_no: string
   ac_name: string
+  polling_stations?: string
   male: string
   female: string
   third_gender: string
   total: string
 }
 
-export function toInt(value: string): number {
+export function toInt(value: string | null | undefined): number {
   const normalized = (value ?? '').replace(/[,\s]/g, '')
   const n = Number.parseInt(normalized, 10)
   return Number.isNaN(n) ? 0 : n
 }
 
 export async function fetchElectorCsvRows(
-  csvPath: string = '/data/tn_ac_wise_electors.csv',
+  csvPath: string = '/data/states/tn/electors.csv',
 ): Promise<ElectorCsvRow[]> {
   const response = await fetch(csvPath)
   if (!response.ok) {

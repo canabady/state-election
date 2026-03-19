@@ -9,75 +9,73 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as MapRouteImport } from './routes/map'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DataIndexRouteImport } from './routes/data/index'
-import { Route as DataDistrictRouteImport } from './routes/data/$district'
+import { Route as StateMapRouteImport } from './routes/$state/map'
+import { Route as StateDataIndexRouteImport } from './routes/$state/data/index'
+import { Route as StateDataDistrictRouteImport } from './routes/$state/data/$district'
 
-const MapRoute = MapRouteImport.update({
-  id: '/map',
-  path: '/map',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DataIndexRoute = DataIndexRouteImport.update({
-  id: '/data/',
-  path: '/data/',
+const StateMapRoute = StateMapRouteImport.update({
+  id: '/$state/map',
+  path: '/$state/map',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DataDistrictRoute = DataDistrictRouteImport.update({
-  id: '/data/$district',
-  path: '/data/$district',
+const StateDataIndexRoute = StateDataIndexRouteImport.update({
+  id: '/$state/data/',
+  path: '/$state/data/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StateDataDistrictRoute = StateDataDistrictRouteImport.update({
+  id: '/$state/data/$district',
+  path: '/$state/data/$district',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
-  '/data/$district': typeof DataDistrictRoute
-  '/data/': typeof DataIndexRoute
+  '/$state/map': typeof StateMapRoute
+  '/$state/data/$district': typeof StateDataDistrictRoute
+  '/$state/data/': typeof StateDataIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
-  '/data/$district': typeof DataDistrictRoute
-  '/data': typeof DataIndexRoute
+  '/$state/map': typeof StateMapRoute
+  '/$state/data/$district': typeof StateDataDistrictRoute
+  '/$state/data': typeof StateDataIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
-  '/data/$district': typeof DataDistrictRoute
-  '/data/': typeof DataIndexRoute
+  '/$state/map': typeof StateMapRoute
+  '/$state/data/$district': typeof StateDataDistrictRoute
+  '/$state/data/': typeof StateDataIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map' | '/data/$district' | '/data/'
+  fullPaths: '/' | '/$state/map' | '/$state/data/$district' | '/$state/data/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map' | '/data/$district' | '/data'
-  id: '__root__' | '/' | '/map' | '/data/$district' | '/data/'
+  to: '/' | '/$state/map' | '/$state/data/$district' | '/$state/data'
+  id:
+    | '__root__'
+    | '/'
+    | '/$state/map'
+    | '/$state/data/$district'
+    | '/$state/data/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MapRoute: typeof MapRoute
-  DataDistrictRoute: typeof DataDistrictRoute
-  DataIndexRoute: typeof DataIndexRoute
+  StateMapRoute: typeof StateMapRoute
+  StateDataDistrictRoute: typeof StateDataDistrictRoute
+  StateDataIndexRoute: typeof StateDataIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/map': {
-      id: '/map'
-      path: '/map'
-      fullPath: '/map'
-      preLoaderRoute: typeof MapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -85,18 +83,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/data/': {
-      id: '/data/'
-      path: '/data'
-      fullPath: '/data/'
-      preLoaderRoute: typeof DataIndexRouteImport
+    '/$state/map': {
+      id: '/$state/map'
+      path: '/$state/map'
+      fullPath: '/$state/map'
+      preLoaderRoute: typeof StateMapRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/data/$district': {
-      id: '/data/$district'
-      path: '/data/$district'
-      fullPath: '/data/$district'
-      preLoaderRoute: typeof DataDistrictRouteImport
+    '/$state/data/': {
+      id: '/$state/data/'
+      path: '/$state/data'
+      fullPath: '/$state/data/'
+      preLoaderRoute: typeof StateDataIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$state/data/$district': {
+      id: '/$state/data/$district'
+      path: '/$state/data/$district'
+      fullPath: '/$state/data/$district'
+      preLoaderRoute: typeof StateDataDistrictRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -104,9 +109,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MapRoute: MapRoute,
-  DataDistrictRoute: DataDistrictRoute,
-  DataIndexRoute: DataIndexRoute,
+  StateMapRoute: StateMapRoute,
+  StateDataDistrictRoute: StateDataDistrictRoute,
+  StateDataIndexRoute: StateDataIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

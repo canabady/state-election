@@ -1,0 +1,10 @@
+{
+  "state_id": "as",
+  "state_name": "Assam",
+  "election_title": "Assam State Election Dashboard",
+  "election_subtitle": "2026 Assembly Election Analysis",
+  "elector_csv_path": "/data/states/as/electors.csv",
+  "district_label": "District",
+  "ac_label": "Assembly Constituency",
+  "ac_short_label": "AC"
+}

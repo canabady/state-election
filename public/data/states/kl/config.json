@@ -1,0 +1,10 @@
+{
+  "state_id": "kl",
+  "state_name": "Kerala",
+  "election_title": "Kerala State Election Dashboard",
+  "election_subtitle": "2026 Assembly Election Analysis",
+  "elector_csv_path": "/data/states/kl/electors.csv",
+  "district_label": "District",
+  "ac_label": "Assembly Constituency",
+  "ac_short_label": "AC"
+}

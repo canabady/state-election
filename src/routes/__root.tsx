@@ -1,9 +1,10 @@
-import { createRootRouteWithContext, Outlet, Link, useNavigate } from '@tanstack/react-router';
+import { createRootRouteWithContext, Outlet, Link, useLocation, useNavigate } from '@tanstack/react-router';
 import type { QueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react';
 import { Search, LayoutGrid, Map as MapIcon } from 'lucide-react';
 import Logo from '../assets/logo.png';
 import { DisclaimerModal } from '../components/common/DisclaimerModal';
+import { fetchStateConfig, fetchStatesRegistry, normalizeStateId, stateExists, type AppConfig, type StateRegistryItem } from '../services/appConfig';
 import { fetchElectorCsvRows, type ElectorCsvRow } from '../services/electors';
 
 interface RouterContext {
@@ -17,26 +18,31 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
     const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [config, setConfig] = useState<AppConfig | null>(null);
+    const [states, setStates] = useState<StateRegistryItem[]>([]);
     const [electorRows, setElectorRows] = useState<ElectorCsvRow[]>([]);
-    const [isSearchLoading, setIsSearchLoading] = useState(true);
+    const [loadedStateId, setLoadedStateId] = useState<string | null>(null);
+    const location = useLocation();
     const navigate = useNavigate();
+
+    const routeStateId = normalizeStateId(location.pathname.split('/').filter(Boolean)[0] ?? null);
+    const routeStateExists = routeStateId ? states.some((state) => state.id === routeStateId) : false;
+    const activeStateId = routeStateExists ? routeStateId : (states[0]?.id ?? routeStateId ?? null);
+    const menuStates = useMemo(() => states.filter((state) => state.showInMenu), [states]);
+    const selectedMenuStateId =
+        activeStateId && menuStates.some((state) => state.id === activeStateId)
+            ? activeStateId
+            : (menuStates[0]?.id ?? '');
 
     useEffect(() => {
         let active = true;
-        fetchElectorCsvRows()
-            .then((rows) => {
-                if (active) {
-                    setElectorRows(rows);
-                }
+        fetchStatesRegistry()
+            .then((registryStates) => {
+                if (active) setStates(registryStates);
             })
             .catch(() => {
                 if (active) {
-                    setElectorRows([]);
-                }
-            })
-            .finally(() => {
-                if (active) {
-                    setIsSearchLoading(false);
+                    setStates([]);
                 }
             });
         return () => {
@@ -44,9 +50,50 @@ function RootComponent() {
         };
     }, []);
 
+    useEffect(() => {
+        if (!activeStateId) return;
+        let active = true;
+
+        stateExists(activeStateId)
+            .then((exists) => {
+                if (!exists) {
+                    if (active) {
+                        setConfig(null);
+                        setElectorRows([]);
+                        setLoadedStateId(activeStateId);
+                    }
+                    return null;
+                }
+                return fetchStateConfig(activeStateId);
+            })
+            .then((cfg) => {
+                if (!cfg) return null;
+                if (active) setConfig(cfg);
+                return fetchElectorCsvRows(cfg.elector_csv_path);
+            })
+            .then((rows) => {
+                if (!rows) return;
+                if (active) {
+                    setElectorRows(rows);
+                    setLoadedStateId(activeStateId);
+                }
+            })
+            .catch(() => {
+                if (active) {
+                    setElectorRows([]);
+                    setLoadedStateId(activeStateId);
+                }
+            });
+
+        return () => {
+            active = false;
+        };
+    }, [activeStateId]);
+
     const filteredSearchRows = useMemo(() => {
         const q = searchTerm.trim().toLowerCase();
         if (!q) return [];
+        if (!activeStateId || loadedStateId !== activeStateId) return [];
 
         return electorRows
             .filter((row) => {
@@ -56,15 +103,31 @@ function RootComponent() {
                 return district.includes(q) || ac.includes(q) || acNo.includes(q);
             })
             .slice(0, 10);
-    }, [electorRows, searchTerm]);
+    }, [activeStateId, electorRows, loadedStateId, searchTerm]);
 
     const handleSelectSearchRow = (row: ElectorCsvRow) => {
+        if (!activeStateId) return;
         setSearchTerm('');
         navigate({
-            to: '/data/$district',
-            params: { district: row.district_name },
+            to: '/$state/data/$district',
+            params: { state: activeStateId, district: row.district_name },
         });
     };
+
+    const handleStateSwitch = (nextStateId: string) => {
+        const normalized = normalizeStateId(nextStateId);
+        if (!normalized) return;
+        setSearchTerm('');
+        navigate({
+            to: '/$state/data',
+            params: { state: normalized },
+        });
+    };
+
+    const isSearchLoading = !activeStateId || loadedStateId !== activeStateId;
+    const searchPlaceholder = `Search ${config?.district_label ?? 'district'} / ${config?.ac_label ?? 'AC name'} / ${config?.ac_short_label ?? 'AC'} no...`;
+    const electionTitle = config?.election_title ?? 'State Election Dashboard';
+    const electionSubtitle = config?.election_subtitle ?? 'Election Analysis';
 
 
     return (
@@ -86,19 +149,34 @@ function RootComponent() {
                         </div>
                         <div>
                             <h1 className="text-xl font-bold text-slate-900 tracking-tight leading-none">
-                                2026 Tamil Nadu State Election
+                                {electionTitle}
                             </h1>
                             <p className="text-s text-slate-500 font-medium mt-1">
-                                Assembly Election Analysis
+                                {electionSubtitle}
                             </p>
                         </div>
                     </Link>
+
+                    <div className="hidden md:block min-w-[220px]">
+                        <select
+                            value={selectedMenuStateId}
+                            onChange={(e) => handleStateSwitch(e.target.value)}
+                            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        >
+                            {menuStates.map((state) => (
+                                <option key={state.id} value={state.id}>
+                                    {state.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
                     <div className="flex items-center gap-4">
                         {/* Main Tabs (Desktop) */}
                         <div className="hidden md:flex bg-slate-100 p-1 rounded-xl">
                             <Link
-                                to="/data"
+                                to="/$state/data"
+                                params={{ state: activeStateId ?? 'tn' }}
                                 activeProps={{
                                     className: 'bg-white text-blue-600 shadow-sm',
                                 }}
@@ -111,7 +189,8 @@ function RootComponent() {
                                 Data
                             </Link>
                             <Link
-                                to="/map"
+                                to="/$state/map"
+                                params={{ state: activeStateId ?? 'tn' }}
                                 activeProps={{
                                     className: 'bg-white text-blue-600 shadow-sm',
                                 }}
@@ -133,7 +212,7 @@ function RootComponent() {
                                 />
                                 <input
                                     type="text"
-                                    placeholder="Search district / AC name / AC no..."
+                                    placeholder={searchPlaceholder}
                                     className="w-full pl-10 pr-4 py-2.5 bg-slate-100 border-transparent focus:bg-white border focus:border-blue-500 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -193,7 +272,8 @@ function RootComponent() {
             <div className="md:hidden bg-white border-b border-slate-200">
                 <div className="flex p-2 gap-2 border-b border-slate-100">
                     <Link
-                        to="/data"
+                        to="/$state/data"
+                        params={{ state: activeStateId ?? 'tn' }}
                         activeProps={{
                             className: 'bg-blue-50 text-blue-600',
                         }}
@@ -206,7 +286,8 @@ function RootComponent() {
                         Data
                     </Link>
                     <Link
-                        to="/map"
+                        to="/$state/map"
+                        params={{ state: activeStateId ?? 'tn' }}
                         activeProps={{
                             className: 'bg-blue-50 text-blue-600',
                         }}
@@ -228,11 +309,24 @@ function RootComponent() {
                         />
                         <input
                             type="text"
-                            placeholder="Search district / AC name / AC no..."
+                            placeholder={searchPlaceholder}
                             className="w-full pl-10 pr-4 py-2.5 bg-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
+                        <div className="mt-2">
+                            <select
+                                value={selectedMenuStateId}
+                                onChange={(e) => handleStateSwitch(e.target.value)}
+                                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                            >
+                                {menuStates.map((state) => (
+                                    <option key={state.id} value={state.id}>
+                                        {state.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                         {searchTerm && (
                             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50">
                                 {isSearchLoading ? (
@@ -260,14 +354,14 @@ function RootComponent() {
 
                     <div className="flex items-center justify-between px-1 mt-3">
                         <p className="text-[10px] text-slate-400 font-medium">
-                            Crafted with :) by{' '}
+                            Source Code:
                             <a
-                                href="https://gnoeee.github.io"
+                                href="https://github.com/electionin/state-election"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-slate-500 hover:text-blue-600 transition-colors"
                             >
-                                Opendata Kerala
+                                Indian State Election
                             </a>
                         </p>
                         <button
