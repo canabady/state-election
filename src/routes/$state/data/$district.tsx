@@ -9,6 +9,7 @@ type DistrictAcRow = {
   districtNo: number
   acNo: number
   acName: string
+  pollingStations: number | null
   male: number
   female: number
   thirdGender: number
@@ -35,6 +36,7 @@ export const Route = createFileRoute('/$state/data/$district')({
         districtNo: toInt(row.district_no),
         acNo: toInt(row.ac_no),
         acName: row.ac_name,
+        pollingStations: row.polling_stations?.trim() ? toInt(row.polling_stations) : null,
         male: toInt(row.male),
         female: toInt(row.female),
         thirdGender: toInt(row.third_gender),
@@ -59,6 +61,10 @@ function DistrictDetail() {
   const totalMale = rows.reduce((sum, row) => sum + row.male, 0)
   const totalFemale = rows.reduce((sum, row) => sum + row.female, 0)
   const totalThirdGender = rows.reduce((sum, row) => sum + row.thirdGender, 0)
+  const hasPollingStations = rows.some((row) => row.pollingStations !== null)
+  const totalPollingStations = hasPollingStations
+    ? rows.reduce((sum, row) => sum + (row.pollingStations ?? 0), 0).toLocaleString('en-IN')
+    : 'NA'
   const sortedRows = useMemo(() => {
     const copy = [...rows]
     copy.sort((a, b) => {
@@ -101,8 +107,13 @@ function DistrictDetail() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard label={`No. of ${config.ac_short_label}`} value={rows.length.toLocaleString('en-IN')} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard
+          className="lg:col-span-2"
+          label={`No. of ${config.ac_short_label}`}
+          value={rows.length.toLocaleString('en-IN')}
+        />
+        <StatCard className="lg:col-span-2" label="No. of Polling Stations" value={totalPollingStations} />
         <StatCard label="Male" value={totalMale.toLocaleString('en-IN')} />
         <StatCard label="Female" value={totalFemale.toLocaleString('en-IN')} />
         <StatCard label="Third Gender" value={totalThirdGender.toLocaleString('en-IN')} />
@@ -177,9 +188,9 @@ function DistrictDetail() {
   )
 }
 
-function StatCard({ label, value }: { label: string; value: string }) {
+function StatCard({ label, value, className = '' }: { label: string; value: string; className?: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4">
+    <div className={`rounded-xl border border-slate-200 bg-white p-4 ${className}`}>
       <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
       <p className="mt-1 text-2xl font-bold text-slate-900">{value}</p>
     </div>

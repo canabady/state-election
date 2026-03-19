@@ -125,12 +125,13 @@ function DataDashboard() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
+          className="lg:col-span-2"
           label={selectedDistricts.length > 0 ? 'Districts (Selected)' : 'Districts'}
           value={districtsForSummary.length.toLocaleString('en-IN')}
         />
-        <StatCard label={`No. of ${config.ac_short_label}`} value={totalAc.toLocaleString('en-IN')} />
+        <StatCard className="lg:col-span-2" label={`No. of ${config.ac_short_label}`} value={totalAc.toLocaleString('en-IN')} />
         <StatCard label="Male" value={totalMale.toLocaleString('en-IN')} />
         <StatCard label="Female" value={totalFemale.toLocaleString('en-IN')} />
         <StatCard label="Third Gender" value={totalThirdGender.toLocaleString('en-IN')} />
@@ -236,9 +237,9 @@ function DataDashboard() {
   )
 }
 
-function StatCard({ label, value }: { label: string; value: string }) {
+function StatCard({ label, value, className = '' }: { label: string; value: string; className?: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4">
+    <div className={`rounded-xl border border-slate-200 bg-white p-4 ${className}`}>
       <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
       <p className="mt-1 text-2xl font-bold text-slate-900">{value}</p>
     </div>

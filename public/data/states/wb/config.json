@@ -2,7 +2,7 @@
   "state_id": "wb",
   "state_name": "West Bengal",
   "election_title": "West Bengal State Election Dashboard",
-  "election_subtitle": "Assembly Election Analysis (using draft rolls)",
+  "election_subtitle": "2026 Assembly Election Analysis (using draft rolls)",
   "elector_csv_path": "/data/states/wb/electors.csv",
   "district_label": "District",
   "ac_label": "Assembly Constituency",

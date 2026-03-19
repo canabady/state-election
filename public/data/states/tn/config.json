@@ -2,7 +2,7 @@
   "state_id": "tn",
   "state_name": "Tamil Nadu",
   "election_title": "Tamil Nadu State Election Dashboard",
-  "election_subtitle": "Assembly Election Analysis",
+  "election_subtitle": "2026 Assembly Election Analysis",
   "elector_csv_path": "/data/states/tn/electors.csv",
   "district_label": "District",
   "ac_label": "Assembly Constituency",
