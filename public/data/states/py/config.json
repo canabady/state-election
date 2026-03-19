@@ -1,0 +1,10 @@
+{
+  "state_id": "py",
+  "state_name": "Puducherry",
+  "election_title": "Puducherry State Election Dashboard",
+  "election_subtitle": "Assembly Election Analysis",
+  "elector_csv_path": "/data/states/py/electors.csv",
+  "district_label": "District",
+  "ac_label": "Assembly Constituency",
+  "ac_short_label": "AC"
+}
