@@ -2,7 +2,7 @@
 
 A multi-state, data-driven election dashboard built with React + TanStack Router.
 
-This app is designed to serve election elector summaries for multiple Indian states using state-scoped routes and CSV datasets.
+This app is designed to serve election elector summaries for various Indian states using state-scoped routes and CSV datasets.
 
 ## Features
 - State-aware routing (`/:state/...`) using lowercase state codes
