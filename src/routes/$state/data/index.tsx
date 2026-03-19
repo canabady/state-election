@@ -70,11 +70,19 @@ function DataDashboard() {
   const state = config.state_id
   const [sortColumn, setSortColumn] = useState<SortColumn>('district')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
-  const totalVoters = districts.reduce((sum, d) => sum + d.totalVoters, 0)
-  const totalAc = districts.reduce((sum, d) => sum + d.acCount, 0)
-  const totalMale = districts.reduce((sum, d) => sum + d.male, 0)
-  const totalFemale = districts.reduce((sum, d) => sum + d.female, 0)
-  const totalThirdGender = districts.reduce((sum, d) => sum + d.thirdGender, 0)
+  const [selectedDistricts, setSelectedDistricts] = useState<string[]>([])
+  const selectedDistrictSet = useMemo(() => new Set(selectedDistricts), [selectedDistricts])
+
+  const districtsForSummary = useMemo(() => {
+    if (selectedDistricts.length === 0) return districts
+    return districts.filter((district) => selectedDistrictSet.has(district.district))
+  }, [districts, selectedDistrictSet, selectedDistricts.length])
+
+  const totalVoters = districtsForSummary.reduce((sum, d) => sum + d.totalVoters, 0)
+  const totalAc = districtsForSummary.reduce((sum, d) => sum + d.acCount, 0)
+  const totalMale = districtsForSummary.reduce((sum, d) => sum + d.male, 0)
+  const totalFemale = districtsForSummary.reduce((sum, d) => sum + d.female, 0)
+  const totalThirdGender = districtsForSummary.reduce((sum, d) => sum + d.thirdGender, 0)
 
   const sortedDistricts = useMemo(() => {
     const rows = [...districts]
@@ -100,6 +108,14 @@ function DataDashboard() {
     setSortDirection('asc')
   }
 
+  const toggleDistrictSelection = (district: string) => {
+    setSelectedDistricts((prev) =>
+      prev.includes(district) ? prev.filter((item) => item !== district) : [...prev, district],
+    )
+  }
+  const allSelected = selectedDistricts.length === districts.length && districts.length > 0
+  const toggleSelectAll = () => setSelectedDistricts(allSelected ? [] : districts.map((d) => d.district))
+
   return (
     <section className="space-y-6 select-none caret-transparent">
       <div className="space-y-1">
@@ -110,7 +126,10 @@ function DataDashboard() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard label="Districts" value={districts.length.toLocaleString('en-IN')} />
+        <StatCard
+          label={selectedDistricts.length > 0 ? 'Districts (Selected)' : 'Districts'}
+          value={districtsForSummary.length.toLocaleString('en-IN')}
+        />
         <StatCard label={`No. of ${config.ac_short_label}`} value={totalAc.toLocaleString('en-IN')} />
         <StatCard label="Male" value={totalMale.toLocaleString('en-IN')} />
         <StatCard label="Female" value={totalFemale.toLocaleString('en-IN')} />
@@ -123,6 +142,15 @@ function DataDashboard() {
           <table className="min-w-full text-sm">
             <thead className="bg-slate-100 text-slate-700">
               <tr>
+                <th className="w-12 px-4 py-3 text-center font-semibold">
+                  <input
+                    type="checkbox"
+                    checked={allSelected}
+                    onChange={toggleSelectAll}
+                    aria-label={`Select all ${config.district_label.toLowerCase()}s`}
+                    className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500/20"
+                  />
+                </th>
                 <SortableHeader
                   align="left"
                   label={config.district_label}
@@ -169,7 +197,21 @@ function DataDashboard() {
             </thead>
             <tbody>
               {sortedDistricts.map((row) => (
-                <tr key={row.district} className="border-t border-slate-100 hover:bg-slate-50/70">
+                <tr
+                  key={row.district}
+                  className={`border-t border-slate-100 hover:bg-slate-50/70 ${
+                    selectedDistrictSet.has(row.district) ? 'font-semibold text-slate-900' : ''
+                  }`}
+                >
+                  <td className="px-4 py-3 text-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedDistrictSet.has(row.district)}
+                      onChange={() => toggleDistrictSelection(row.district)}
+                      aria-label={`Select ${row.district}`}
+                      className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500/20"
+                    />
+                  </td>
                   <td className="px-4 py-3 font-medium text-slate-900">
                     <Link
                       to="/$state/data/$district"
